@@ -27,7 +27,7 @@ export default function Home() {
 
   const GetResultQr = () => {
     if (isGenerated > 0) {
-      return <QRCode format={'png'} fgColor={foreground} bgColor={background} size={'100%'} style={{aspectRatio: 1}} value={url.current} />
+      return <QRCode level="H" format={'png'} fgColor={foreground} bgColor={background} size={'100%'} style={{aspectRatio: 1}} value={url.current} />
     }
     return <MdQrCode2 size={'100%'} />
   }
