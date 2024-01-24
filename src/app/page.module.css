@@ -2,7 +2,7 @@
   display: flex;
   min-height: 100vh;
   justify-content: center;
-  background-color: #14110f;
+  background-color: #e3c3c3;
   padding: 16px;
 }
 
@@ -16,7 +16,7 @@
 
 .header {
   display: flex;
-  color: #e3c3c3;
+  color: #b14444;
   font-weight: 600;
   align-items: center;
   gap: 8px;
@@ -52,6 +52,8 @@
 .tab {
   display: flex;
   justify-content: space-between;
+  background-color: #b14444;
+  color: #fff;
   font-weight: 700;
   border: none;
   border-radius: 8px;
@@ -59,6 +61,14 @@
   width: 100%;
   cursor: pointer;
   font-size: 26px;
+}
+
+.tab:hover {
+  background-color: #c16666;
+}
+
+.tab:active {
+  background-color: #a12222;
 }
 
 .tab p {
@@ -80,7 +90,7 @@
 .input {
   width: calc(100% - 68px);
   background-color: #fff;
-  border: 1px solid #a9abae;
+  border: 1px solid #d18888;
   font-size: 14px;
   padding: 4px;
   color: #000;
@@ -100,11 +110,11 @@
 }
 
 .input-container button:hover:not(:disabled) {
-  background-color: #a12222;
+  background-color: #c16666;
 }
 
 .input-container button:active:not(:disabled) {
-  background-color: #c16666;
+  background-color: #a12222;
 }
 
 .input:focus {
@@ -124,7 +134,7 @@
   border: none;
   padding: 8px;
   cursor: pointer;
-  background-color: #e3c3c3;
+  background-color: #fffc;
 }
 
 .design-content {
@@ -186,7 +196,7 @@
   font-family: "Roboto";
   font-style: italic;
   font-weight: 600;
-  color: #e3c3c3;
+  color: #a12222;
   text-align: justify;
   margin-top: 16px;
 }

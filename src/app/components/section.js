@@ -22,10 +22,7 @@ export default function Section({icon, text, content, defaultActive}) {
 
     return (
     <div className={styles.section}>
-      <button className={styles.tab} style={{
-        color: active ? '#fff' : '#a12222',
-        borderColor: active ? '#810000' : '#0008',
-        backgroundColor: active ? '#b14444' : '#e3c3c3'}} onClick={() => setActive(!active)}>
+      <button className={styles.tab} onClick={() => setActive(!active)}>
         <div className={styles['tab-left']}>
             <>{icon}</>
             <p>{text}</p>
