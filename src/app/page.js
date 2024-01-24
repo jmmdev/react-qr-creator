@@ -66,7 +66,7 @@ export default function Home() {
     if (file && showFile) {
       return (
         <div className={styles['logo-container']}>
-          <div style={{position: 'relative', width: '25%', aspectRatio: 1, display: loadedLogo ? 'block' : 'none'}}>
+          <div style={{position: 'relative', width: '20%', aspectRatio: 1, display: loadedLogo ? 'block' : 'none'}}>
             <img onLoad={() => {
                   setTimeout(() => {
                     setLoadedLogo(true)
