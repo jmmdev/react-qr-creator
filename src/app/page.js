@@ -8,6 +8,7 @@ import React, { useRef, useState } from "react";
 import FrameSelector from "./components/frame-selector";
 import "@fontsource/roboto";
 import html2canvas from "html2canvas";
+import DomToImage from "dom-to-image";
 import QRCode from "react-qr-code";
 import { HslStringColorPicker } from "react-colorful";
 
@@ -47,12 +48,14 @@ export default function Home() {
   }
 
   const download = async () => {
-    const canvas = await html2canvas(qrElementRef.current, {backgroundColor: null})
-    const url = canvas.toDataURL('image/png')
-    const link = document.createElement('a')
-    link.download = 'my-qr.png'
-    link.href = url
-    link.click()
+    DomToImage.toBlob(qrElementRef.current)
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob)
+        const link = document.createElement('a')
+        link.download = 'my-qr.png'
+        link.href = url
+        link.click()
+      });
   }
 
   const handleFileChange = e => {
