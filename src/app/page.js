@@ -7,7 +7,6 @@ import Section from "./components/section";
 import React, { useRef, useState } from "react";
 import FrameSelector from "./components/frame-selector";
 import "@fontsource/roboto";
-import html2canvas from "html2canvas";
 import DomToImage from "dom-to-image";
 import QRCode from "react-qr-code";
 import { HslStringColorPicker } from "react-colorful";
