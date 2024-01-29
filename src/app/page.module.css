@@ -7,10 +7,10 @@
 }
 
 .main-container {
+  width: 100%;
+  max-width: 1200px;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 1100px;
   gap: 8px;
 }
 
@@ -27,7 +27,6 @@
 }
 
 .generator {
-  max-width: 1100px;
   width: 100%;
   display: flex;
 }
@@ -35,10 +34,11 @@
 .options {
   display: flex;
   flex-direction: column;
-  width: 75%;
+  width: 70%;
 }
 
 .preview {
+  width: 30%;
   display: flex;
   flex-direction: column;
   padding: 16px;
@@ -92,8 +92,8 @@
 
 .input {
   width: calc(100% - 88px);
-  background-color: #fff;
-  border: 1px solid #d18888;
+  background-color: #fffc;
+  border: 1px solid #0004;
   font-size: 14px;
   padding: 4px;
   color: #000;
@@ -104,6 +104,7 @@
   height: 32px;
   padding: 4px 8px;
   font-family: "Roboto";
+  font-size: 16px;
   border: none;
   border-radius: 4px;
   background-color: #b14444;
@@ -204,7 +205,10 @@
   border-radius: 4px;
   position: absolute;
   z-index: 1;
-  background: linear-gradient(90deg,#f008 0,#ff08 17%,#0f08 33%,#0ff8 50%,#00f8 67%,#f0f8 83%,#f008);
+}
+
+.colorpicker-container:not(:first-child) > .colorpicker-options > div > .react-colorful > div {
+  background: linear-gradient(90deg,#ff000033 0,#ffff0033 17%,#00ff0033 33%,#00ffff33 50%,#0000ff33 67%,#ff00ff33 83%,#ff000033);
 }
 
 .react-colorful > div:first-child {
@@ -232,6 +236,7 @@
 }
 
 .qr-container {
+  width: 100%;
   aspect-ratio: 1;
   position: relative;
   display: flex;
@@ -285,37 +290,64 @@
   gap: 8px;
 }
 
-.file-container > p {
-  color: #810000;
-}
-
 .upload {
+  width: 150px;
   padding: 8px;
   cursor: pointer;
-  background-color: #06b;
+  background-color: #06d;
   border: none;
   border-radius: 4px;
   font-family: "Roboto";
   font-size: 16px;
   font-weight: 500;
   display: flex;
+  gap: 4px;
   justify-content: center;
   align-items: center;
-  gap: 4px;
+}
+
+.upload:hover {
+  background-color: #05d;
+}
+
+.upload:active {
+  background-color: #07d;
+}
+
+.file {
+  width: 100%;
+  font-family: "Roboto";
+  font-size: 16px;
+  height: 100%;
+  padding: 0 4px;
+  color: #fffa;
+  background-color: #0004;
+  user-select: none;
+  border: none;
 }
 
 .show {
-  background-color: transparent;
+  height: 100%;
+  aspect-ratio: 1;
+  background-color: #b14444;
   border: none;
-  color: #810000;
+  color: #fff;
   font-size: 26px;
   display: flex;
+  justify-content: center;
   align-items: center;
   cursor: pointer;
+  border-radius: 4px;
 }
 
 .show:hover {
-  color: #a12222;
+  color: #ddd;
+  background-color: #a12222;
+}
+
+.show:active {
+  color: #fff;
+  background-color: #c16666;
 }
 
 .loader-container {
@@ -337,9 +369,15 @@
   color: #000;
 }
 
-@media (orientation: portrait) {
+@media (max-width: 1150px) {
+  .main-container {
+    width: min(100%, 768px);
+  }
+
   .generator {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .options {
@@ -351,11 +389,12 @@
   }
 
   .preview {
+    width: 100%;
     align-items: center;
   }
 
   .preview > * {
-    width: min(400px, 100%)
+    width: min(300px, 100%)
   }
 
   .colorpicker-group-container {

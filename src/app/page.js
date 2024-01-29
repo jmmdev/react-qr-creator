@@ -102,15 +102,15 @@ export default function Home() {
   const GetFileFeatures = () => {
     if (file) {
       return (
-        <>
-          <p className={styles.file}>{file.name}</p>
+        <div style={{width: "100%", height: "100%", display: "flex", gap: "8px"}}>
+          <input type="text" disabled className={styles.file} value={file.name} />
           <button className={styles.show} onClick={() => setShowFile(!showFile)}>
             <GetShowIcon />
           </button>
-        </>
+        </div>
       )
     }
-    return null
+    return <input type="text" disabled className={styles.file} style={{fontStyle: "italic"}} value={'No image yet'} />
   }
 
   const getActualColor = (color, layer) => {
@@ -119,9 +119,9 @@ export default function Home() {
       const hue = colorValues[0];
 
       if (layer === 'fg')
-        return `hsl(${hue}, 50%, 25%)`
+        return `hsl(${hue}, 100%, 50%)`
       else
-        return `hsl(${hue}, 50%, 75%)`
+        return `hsl(${hue}, 100%, 90%)`
     }
     return color
   }
@@ -182,7 +182,6 @@ export default function Home() {
                       </button>
                       <div style={{width: '100%', position: 'relative'}}>
                         <HslStringColorPicker className={styles['react-colorful']} color={foreground} onChange={color => fgValue.current = color} />
-                        <div style={{width: '100%', height: '100%', backgroundColor:'#000', borderRadius: 3, top: 0, left: 0, position: 'absolute'}}/>
                       </div>
                     </div>
                 </div>
@@ -225,7 +224,7 @@ export default function Home() {
             style={{
                   color: getActualColor(foreground, 'fg'),
                   backgroundColor: getActualColor(background, 'bg'),
-                  borderWidth: 8,
+                  borderWidth: 12,
                   borderColor: border ? getActualColor(foreground, 'fg') : 'transparent',
                   borderRadius: border && border.includes('rounded') ? 16 : 0,
                   borderStyle: border && border.includes('dashed') ? 'dashed' : 
