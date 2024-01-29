@@ -124,18 +124,21 @@ export default function Home() {
     return color
   }
 
+  const handleUpEvents = () => {
+    if (foreground !== fgValue.current) {
+      setLoadedLogo(false)
+      setForeground(fgValue.current)
+    }
+    if (background !== bgValue.current) {
+      setLoadedLogo(false)
+      setBackground(bgValue.current)
+    }
+  }
+
   return (
     <main className={styles.main} 
-      onMouseUp={e => {
-        if (foreground !== fgValue.current) {
-          setLoadedLogo(false)
-          setForeground(fgValue.current)
-        }
-        if (background !== bgValue.current) {
-          setLoadedLogo(false)
-          setBackground(bgValue.current)
-        }
-      }}>
+      onMouseUp={() => handleUpEvents()}
+      onTouchEnd={() => handleUpEvents()}>
       <div className={styles['main-container']}>
         <div className={styles.header}>
           <MdQrCode />
