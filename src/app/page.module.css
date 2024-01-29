@@ -10,7 +10,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1100px;
   gap: 8px;
 }
 
@@ -27,6 +27,7 @@
 }
 
 .generator {
+  max-width: 1100px;
   width: 100%;
   display: flex;
 }
@@ -336,19 +337,7 @@
   color: #000;
 }
 
-@media (max-width: 650px) {
-  .colorpicker-group-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .colorpicker-container {
-    width: calc(100%);
-  }
-}
-
-@media (max-width: 899px) {
+@media (orientation: portrait) {
   .generator {
     display: block;
   }
@@ -362,7 +351,20 @@
   }
 
   .preview {
-    width: 100%;
     align-items: center;
+  }
+
+  .preview > * {
+    width: min(400px, 100%)
+  }
+
+  .colorpicker-group-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .colorpicker-container {
+    width: 100%;
   }
 }
