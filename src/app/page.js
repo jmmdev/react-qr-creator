@@ -1,16 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import styles from "./page.module.css";
-import {MdQrCode, MdQrCode2, MdTextFields, MdOutlineSquare, MdPalette, MdImage, MdDownload, MdFileUpload, MdSafetyCheck} from 'react-icons/md';
+import {MdQrCode, MdQrCode2, MdTextFields, MdOutlineSquare, MdPalette, MdImage, MdDownload, MdFileUpload, MdCheck} from 'react-icons/md';
 import {IoMdEye, IoMdEyeOff} from 'react-icons/io';
 import Section from "./components/section";
 import React, { useRef, useState } from "react";
 import FrameSelector from "./components/frame-selector";
 import "@fontsource/roboto";
-import { ColorPicker } from '@vtaits/react-color-picker';
-import '@vtaits/react-color-picker/index.css';
 import html2canvas from "html2canvas";
 import QRCode from "react-qr-code";
+import { HslStringColorPicker } from "react-colorful";
 
 export default function Home() {
   const url = useRef('');
@@ -18,8 +17,10 @@ export default function Home() {
   const inputRef = React.createRef();
   const [frame, setFrame] = useState(0);
   const [border, setBorder] = useState(null);
-  const [foreground, setForeground] = useState('#000');
-  const [background, setBackground] = useState('#fff');
+  const fgValue = useRef('hsl(0, 0%, 0%)')
+  const [foreground, setForeground] = useState(fgValue.current);
+  const bgValue = useRef('hsl(0, 0%, 100%)')
+  const [background, setBackground] = useState(bgValue.current);
   const [isGenerated, setIsGenerated] = useState(0);
   const [file, setFile] = useState(null);
   const [showFile, setShowFile] = useState(true);
@@ -27,24 +28,22 @@ export default function Home() {
 
   const GetResultQr = () => {
     if (isGenerated > 0) {
-      return <QRCode level="H" format={'png'} fgColor={foreground} bgColor={background} size={'100%'} style={{aspectRatio: 1}} value={url.current} />
+      return <QRCode level="H" format={'png'} fgColor={getActualColor(foreground, 'fg')} bgColor={getActualColor(background, 'bg')} size={'100%'} style={{aspectRatio: 1}} value={url.current} />
     }
     return <MdQrCode2 size={'100%'} />
   }
 
   const GetDownloadButton = () => {
-    const isDisabled = file && showFile && !loadedLogo
-    if (isGenerated) {
-      return (
-        <button disabled={isDisabled} className={styles.download} 
-          style={{
-            cursor: isDisabled ? 'default' : 'pointer'}} onClick={() => download()}>
-          <MdDownload />
-          <p>Download</p>
-        </button>
-      )
-    }
-    return null
+    const isDisabled = !(isGenerated > 0) || file && showFile && !loadedLogo
+  
+    return (
+      <button disabled={isDisabled} className={styles.download} 
+        style={{
+          cursor: isDisabled ? 'default' : 'pointer'}} onClick={() => isDisabled ? {} : download()}>
+        <MdDownload />
+        <p>Download</p>
+      </button>
+    )
   }
 
   const download = async () => {
@@ -112,8 +111,31 @@ export default function Home() {
     return null
   }
 
+  const getActualColor = (color, layer) => {
+    if (color !== 'hsl(0, 0%, 0%)' && color !== 'hsl(0, 0%, 100%)') {
+      const colorValues = ((color.replace('hsl(', '')).replace(')', '')).split(', ')
+      const hue = colorValues[0];
+
+      if (layer === 'fg')
+        return `hsl(${hue}, 50%, 25%)`
+      else
+        return `hsl(${hue}, 50%, 75%)`
+    }
+    return color
+  }
+
   return (
-    <main className={styles.main}>
+    <main className={styles.main} 
+      onMouseUp={e => {
+        if (foreground !== fgValue.current) {
+          setLoadedLogo(false)
+          setForeground(fgValue.current)
+        }
+        if (background !== bgValue.current) {
+          setLoadedLogo(false)
+          setBackground(bgValue.current)
+        }
+      }}>
       <div className={styles['main-container']}>
         <div className={styles.header}>
           <MdQrCode />
@@ -137,38 +159,49 @@ export default function Home() {
               <FrameSelector frame={frame} setFrame={setFrame} setBorder={setBorder} />
             } />
             <Section icon={<MdPalette />} text="Colors" content={
-              <div>
-                <div className={styles['colorpicker-group-container']}>
-                  <div className={styles['colorpicker-container']}>
-                    <p>Foreground color</p>
-                    <div className={styles['colorpicker-bg']}>
-                      <ColorPicker
-                      saturationWidth={250}
-                      saturationHeight={250}
-                      value={foreground} onDrag={color => {
-                        if (loadedLogo)
+              <div className={styles['colorpicker-group-container']}>
+                <div className={styles['colorpicker-container']}>
+                  <p>Foreground color</p>
+                    <div className={styles['colorpicker-options']}>
+                      <button 
+                        onClick={() => {
                           setLoadedLogo(false)
-                        setForeground(color)
-                      }} />
+                          fgValue.current = 'hsl(0, 0%, 0%)'
+                          setForeground(fgValue.current)
+                        }}
+                        className={styles['default-color']}
+                        style={{
+                          backgroundColor: '#000',
+                          boxShadow: foreground === 'hsl(0, 0%, 0%)' ? '0 0 0 2px #fffc' : 'none'}}>
+                        <MdCheck size={'100%'} color="#fff" style={{display: foreground === 'hsl(0, 0%, 0%)' ? 'block' : 'none'}} />
+                      </button>
+                      <div style={{width: '100%', position: 'relative'}}>
+                        <HslStringColorPicker className={styles['react-colorful']} color={foreground} onChange={color => fgValue.current = color} />
+                        <div style={{width: '100%', height: '100%', backgroundColor:'#000', borderRadius: 3, top: 0, left: 0, position: 'absolute'}}/>
+                      </div>
                     </div>
-                  </div>
-                  <div className={styles['colorpicker-container']}>
-                    <p>Background color</p>
-                    <div className={styles['colorpicker-bg']}>
-                      <ColorPicker
-                      saturationWidth={250}
-                      saturationHeight={250}
-                      value={background} onDrag={color => {
-                        if (loadedLogo)
-                          setLoadedLogo(false)
-                        setBackground(color)
-                      }} />
+                </div>
+                <div className={styles['colorpicker-container']}>
+                  <p>Background color</p>
+                  <div className={styles['colorpicker-options']}>
+                    <button
+                      onClick={() => {
+                        setLoadedLogo(false)
+                        bgValue.current = 'hsl(0, 0%, 100%)'
+                        setBackground(bgValue.current)
+                      }}
+                      className={styles['default-color']} 
+                      style={{
+                        backgroundColor: '#fff',
+                        boxShadow: background === 'hsl(0, 0%, 100%)' ? '0 0 0 2px #000c' : 'none'}}>
+                      <MdCheck size={'100%'} color="#000" style={{display: background === 'hsl(0, 0%, 100%)' ? 'block' : 'none'}} />
+                    </button>
+                    <div style={{width: '100%', position: 'relative'}}>
+                      <HslStringColorPicker className={styles['react-colorful']} color={background} onChange={color => bgValue.current = color} />
+                      <div style={{width: '100%', height: '100%', backgroundColor:'#fff', borderRadius: 3, top: 0, left: 0, position: 'absolute'}}/>
                     </div>
                   </div>
                 </div>
-                <p className={styles.warning}>
-                  * Notice: for a QR code to be readable by most scanning applications, the foreground color must be darker than the background color. Additionally, there should be sufficient contrast between both colors for proper functionality.
-                </p>
               </div>
             } />
             <Section icon={<MdImage />} text="Custom logo" content={
@@ -185,10 +218,10 @@ export default function Home() {
           <div className={styles.preview}>
             <div ref={qrElementRef} className={styles['qr-container']}
             style={{
-                  color: foreground,
-                  backgroundColor: background,
+                  color: getActualColor(foreground, 'fg'),
+                  backgroundColor: getActualColor(background, 'bg'),
                   borderWidth: 8,
-                  borderColor: border ? foreground : 'transparent',
+                  borderColor: border ? getActualColor(foreground, 'fg') : 'transparent',
                   borderRadius: border && border.includes('rounded') ? 16 : 0,
                   borderStyle: border && border.includes('dashed') ? 'dashed' : 
                                border && border.includes('solid') ? 'solid' : 'solid', 
