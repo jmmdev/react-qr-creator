@@ -315,11 +315,11 @@
 }
 
 .file {
-  width: 100%;
+  width: calc(100% - 150px);
   font-family: "Roboto";
   font-size: 16px;
   height: 100%;
-  padding: 0 4px;
+  padding: 8px 4px;
   color: #fffa;
   background-color: #0004;
   user-select: none;
@@ -367,6 +367,21 @@
   padding: 8px;
   text-align: center;
   color: #000;
+}
+
+@media (max-width: 400px) {
+  .file-container {
+    flex-direction: column;
+  }
+
+  .upload {
+    width: 100%;
+    order: 1;
+  }
+
+  .file {
+    width: 100%;
+  }
 }
 
 @media (max-width: 1150px) {
