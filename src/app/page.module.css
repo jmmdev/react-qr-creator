@@ -1,424 +1,59 @@
-.main {
-  display: flex;
-  min-height: 100vh;
-  justify-content: center;
-  background-color: #e3c3c3;
-  padding: 16px;
-}
-
-.main-container {
-  width: 100%;
-  max-width: 1200px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.header {
-  display: flex;
-  color: #b14444;
-  font-weight: 600;
-  align-items: center;
-  gap: 8px;
-  font-family: "Roboto";
-  padding: 16px;
-  padding-bottom: 0;
-  font-size: calc(min(10vw, 64px))
-}
-
-.generator {
-  width: 100%;
-  display: flex;
-}
-
-.options {
-  display: flex;
-  flex-direction: column;
-  width: 70%;
-}
-
-.preview {
-  width: 30%;
-  display: flex;
-  flex-direction: column;
-  padding: 16px;
-  gap: 8px;
-}
-
-.section {
-  display: flex;
-  padding: 16px;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.tab {
-  display: flex;
-  justify-content: space-between;
-  background-color: #b14444;
-  color: #fff;
-  font-weight: 700;
-  border: none;
-  border-radius: 8px;
-  padding: 8px;
-  width: 100%;
-  cursor: pointer;
-  font-size: 26px;
-}
-
-.tab:hover {
-  background-color: #c16666;
-}
-
-.tab:active {
-  background-color: #a12222;
-}
-
-.tab p {
-  font-size: 20px;
-}
-
-.tab-left {
-  display: flex;
-  gap: 4px;
-  align-items: center;
-}
-
-.input-container {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.input {
-  width: calc(100% - 88px);
-  background-color: #fffc;
-  border: 1px solid #0004;
-  font-size: 14px;
-  padding: 4px;
-  color: #000;
-}
-
-.input-container button {
-  width: 84px;
-  height: 32px;
-  padding: 4px 8px;
-  font-family: "Roboto";
-  font-size: 16px;
-  border: none;
-  border-radius: 4px;
-  background-color: #b14444;
-}
-
-.input-container button:not(:disabled) {
-  cursor: pointer;
-}
-
-.input-container button:hover:not(:disabled) {
-  background-color: #c16666;
-}
-
-.input-container button:active:not(:disabled) {
-  background-color: #a12222;
-}
-
-.input:focus {
-  outline: none;
-  border: 1px solid #000;
-}
-
-.design-gallery {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.design {
-  background: none;
-  width: 64px;
-  border: none;
-  padding: 8px;
-  cursor: pointer;
-  background-color: #fffc;
-}
-
-.design-content {
-  width: 100%;
-  aspect-ratio: 1;
-  border-color: #000;
-  position: relative;
-}
-
-.design-none:before, .design-none:after {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  content: " ";
-  height: 56px;
-  width: 2px;
-  background-color: #777;
-}
-
-.design-none:before {
-  transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.design-none:after {
-  transform: translate(-50%, -50%) rotate(-45deg);
-}
-
-.colorpicker-group-container {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  padding-top: 16px;
-}
-
-.colorpicker-container {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.colorpicker-options {
-  display: flex;
-  gap: 24px;
-}
-
-.default-color {
-  height: 28px;
-  aspect-ratio: 1;
-  border-radius: 4px;
-  border-width: 0;
-}
-
 .react-colorful {
   width: 100% !important;
   height: auto !important;
   position: relative;
 }
 
-.react-colorful > div {
-  width: 100%;
-  height: 28px;
-  border-radius: 4px;
-  position: absolute;
-  z-index: 1;
-}
-
 .colorpicker-container:not(:first-child) > .colorpicker-options > div > .react-colorful > div {
   background: linear-gradient(90deg,#ff000033 0,#ffff0033 17%,#00ff0033 33%,#00ffff33 50%,#0000ff33 67%,#ff00ff33 83%,#ff000033);
+}
+
+.react-colorful > div {
+  height: 28px;
+  border-radius: 4px;
 }
 
 .react-colorful > div:first-child {
   display: none;
 }
 
+.fg-container > .react-colorful > div > div::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #000;
+  width: 100%;
+  height: 28px;
+  border-radius: 4px;
+  opacity: 0.2;
+}
+
+.bg-container > .react-colorful > div > div::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  width: 100%;
+  height: 28px;
+  border-radius: 4px;
+  opacity: 0.75;
+}
+
 .react-colorful > div > div > div {
+  position: relative;
   width: 0;
   border-radius: 0;
   background-color: transparent;
   z-index: 20 !important;
-}
-
-.react-colorful > div > div > div > div {
-  background-color: transparent !important;
-}
-
-.colorpicker-container p {
-  padding: 4px 8px;
-  background-color: #b14444;
-  color: #fff;
-  font-size: 18px;
-  border-bottom: none;
-  border-radius: 4px 4px 0 0;
-}
-
-.qr-container {
-  width: 100%;
-  aspect-ratio: 1;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 16px;
-}
-
-.logo-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex; 
-  width: 100%;
-  height: 100%; 
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-}
-
-.download {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 4px;
-  font-family: "Roboto";
-  font-size: 16px;
-  font-weight: 500;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #0b6;
-  gap: 4px;
-}
-
-.download:disabled {
-  background-color: #0b68;
-}
-
-.download:not(:disabled):hover {
-  background-color: #0a6;
-}
-
-.download:not(:disabled):active {
-  background-color: #0c6;
-}
-
-.file-container {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.upload {
-  width: 150px;
-  padding: 8px;
   cursor: pointer;
-  background-color: #06d;
-  border: none;
-  border-radius: 4px;
-  font-family: "Roboto";
-  font-size: 16px;
-  font-weight: 500;
-  display: flex;
-  gap: 4px;
-  justify-content: center;
-  align-items: center;
 }
 
-.upload:hover {
-  background-color: #05d;
+.react-colorful > div > div > div:hover {
+  box-shadow: 0 0 2px 4px #fff8;
 }
 
-.upload:active {
-  background-color: #07d;
-}
-
-.file {
-  width: calc(100% - 150px);
-  font-family: "Roboto";
-  font-size: 16px;
-  height: 100%;
-  padding: 8px 4px;
-  color: #fffa;
-  background-color: #0004;
-  user-select: none;
-  border: none;
-}
-
-.show {
-  height: 100%;
-  aspect-ratio: 1;
-  background-color: #b14444;
-  border: none;
-  color: #fff;
-  font-size: 26px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.show:hover {
-  color: #ddd;
-  background-color: #a12222;
-}
-
-.show:active {
-  color: #fff;
-  background-color: #c16666;
-}
-
-.loader-container {
-  width: 50%;
-  position: relative;
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #fff;
-  opacity: 75%;
-}
-
-.loader-container p {
-  font-size: 24px;
-  font-weight: 600;
-  padding: 8px;
-  text-align: center;
-  color: #000;
-}
-
-@media (max-width: 400px) {
-  .file-container {
-    flex-direction: column;
-  }
-
-  .upload {
-    width: 100%;
-    order: 1;
-  }
-
-  .file {
-    width: 100%;
-  }
-}
-
-@media (max-width: 1150px) {
-  .main-container {
-    width: min(100%, 768px);
-  }
-
-  .generator {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .options {
-    width: 100%;
-  }
-
-  .section:first-child {
-    order: 3;
-  }
-
-  .preview {
-    width: 100%;
-    align-items: center;
-  }
-
-  .preview > * {
-    width: min(300px, 100%)
-  }
-
-  .colorpicker-group-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .colorpicker-container {
-    width: 100%;
-  }
+.react-colorful > div > div > div:active {
+  box-shadow: 0 0 2px 4px #fff8;
 }

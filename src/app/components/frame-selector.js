@@ -1,24 +1,36 @@
-import styles from "../page.module.css";
-import Frame from "./frame";
+import { useState } from 'react';
 
-export default function FrameSelector ({frame, setFrame, setBorder}) {
+export default function FrameSelector ({setBorder}) {
+    const [selected, setSelected] = useState(0);
+
     const designList = ['none', 'solid', 'solid-rounded', 'dashed', 'dashed-rounded']
 
+    function selectBorder(index) {
+        setSelected(index);
+        if (index > 0) {
+            setBorder(designList[index]);
+            return;
+        }
+        setBorder(null);
+    }
+
     return (
-        <div className={styles['design-gallery']}>
+        <>
             {designList.map((d, index) => {
                 return (
-                    <button key={d} className={styles.design} 
-                        style={{
-                            boxShadow: frame === index ? '0 0 0 3px #b14444' : 'none',
-                        }} onClick={() => { 
-                            setFrame(index)
-                            setBorder(d !== 'none' ? d : null)
-                        }}>
-                        <Frame value={d} />
+                    <button key={d} className={`w-16 p-1.5 aspect-square bg-slate-500 ${selected === index ? "ring-4 ring-blue-300" : "hover:ring-4 ring-slate-300"}`}
+                    onClick={() => selectBorder(index)}>
+                        <div className={`relative w-full aspect-square ${d !== 'none' ? "border-4 border-slate-900" : ""} ${d.includes('rounded') ? "rounded-lg" : ""} ${d.includes('dashed') ? "border-dashed" : ""}`}>
+                            {d === "none" &&
+                                <>
+                                    <div className="absolute top-0 right-1/2 rotate-45 w-0.5 h-full bg-slate-300" />
+                                    <div className="absolute top-0 left-1/2 -rotate-45 w-0.5 h-full bg-slate-300" />
+                                </>
+                            }
+                        </div>
                     </button>
                 )
             })}
-        </div>
+        </>
     )
 }
