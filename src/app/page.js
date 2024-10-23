@@ -9,6 +9,7 @@ import "@fontsource/roboto";
 import DomToImage from "dom-to-image";
 import QRCode from "react-qr-code";
 import { HslStringColorPicker } from "react-colorful";
+import Image from "next/image";
 
 export default function Home() {
   const url = useRef('');
@@ -64,18 +65,17 @@ export default function Home() {
   const QrLogo = () => {
     if (file && showFile) {
       return (
-        <div className={`absolute flex items-center top-1/2 left-1/2 w-1/5 aspect-square -translate-x-1/2 -translate-y-1/2 ${loadedLogo ? "" : "hidden"}`}>
-        <img onLoad={() => {
+        <div className={`absolute flex items-center top-1/2 left-1/2 w-1/5 -translate-x-1/2 -translate-y-1/2 ${loadedLogo ? "" : "hidden"}`}>
+        <Image onLoad={() => {
               setTimeout(() => {
                 setLoadedLogo(true)
               }, 700);
               }} 
               style={{
                 width: '100%',
-                objectFit: "contain",
-                userSelect: 'none',
+                height: 'auto',
               }}
-              src={URL.createObjectURL(file)} alt="XD" />
+              src={URL.createObjectURL(file)} width={0} height={0} alt="XD" />
           <div className={styles['loader-container']} style={{display: loadedLogo ? 'none' : 'block'}}>
               <p>Please wait...</p>
             </div>
@@ -169,7 +169,7 @@ export default function Home() {
             </div>
           }/>
         </main>
-        <div className="flex justify-center items-center w-full md:max-w-xs mx-auto">
+        <div className="flex justify-center items-center w-full max-w-xs mx-auto">
           <div className="flex flex-col gap-4 md:rounded-lg p-8 md:bg-slate-800">
             <div className="relative p-3" ref={qrElementRef}
             style={{
