@@ -8,7 +8,7 @@ export default function Section({icon, text, content, tag, activeSection, setAct
             {icon}
             {text}
         </p>
-        <button className="block md:hidden" onClick={() => setActiveSection(tag)}>
+        <button className="block md:hidden hover:text-white active:text-slate-300" onClick={() => setActiveSection(tag)}>
           <p>{activeSection === tag ? <FaChevronUp /> : <FaChevronDown />}</p>
         </button>
       </div>
