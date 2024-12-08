@@ -8,11 +8,13 @@ export default function Section({icon, text, content, tag, activeSection, setAct
             {icon}
             {text}
         </p>
-        <p className="block md:hidden">{activeSection === tag ? <FaChevronUp /> : <FaChevronDown />}</p>
-      </div>
-        <button className={`${activeSection === tag ?'flex' : 'hidden'} md:flex gap-3 px-3 py-3 bg-slate-800 md:rounded-b-md`} onClick={() => setActiveSection(tag)}>
-            {content}
+        <button className="block md:hidden" onClick={() => setActiveSection(tag)}>
+          <p>{activeSection === tag ? <FaChevronUp /> : <FaChevronDown />}</p>
         </button>
+      </div>
+        <div className={`${activeSection === tag ?'flex' : 'hidden'} md:flex gap-3 px-3 py-3 bg-slate-800 md:rounded-b-md`}>
+            {content}
+        </div>
     </div>
     );
   }
