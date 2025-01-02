@@ -62,23 +62,27 @@ export default function Home() {
     }
   };
 
+  const MyImage = React.memo(function MyImage({src}) {
+    return <Image onLoad={() => {
+      setTimeout(() => {
+        setLoadedLogo(true)
+      }, 700);
+      }} 
+      style={{
+        width: '100%',
+        height: 'auto',
+      }}
+      src={src} width={0} height={0} alt="XD" />
+  });
+
   const QrLogo = () => {
     if (file && showFile) {
       return (
         <div className={`absolute flex items-center top-1/2 left-1/2 w-1/5 -translate-x-1/2 -translate-y-1/2 ${loadedLogo ? "" : "hidden"}`}>
-        <Image onLoad={() => {
-              setTimeout(() => {
-                setLoadedLogo(true)
-              }, 700);
-              }} 
-              style={{
-                width: '100%',
-                height: 'auto',
-              }}
-              src={URL.createObjectURL(file)} width={0} height={0} alt="XD" />
+          <MyImage src={URL.createObjectURL(file)} />
           <div className={styles['loader-container']} style={{display: loadedLogo ? 'none' : 'block'}}>
-              <p>Please wait...</p>
-            </div>
+            <p>Please wait...</p>
+          </div>
         </div>
       )
     }
