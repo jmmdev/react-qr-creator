@@ -15,7 +15,6 @@ export default function Home() {
   const url = useRef('');
   const qrElementRef = React.createRef();
   const inputRef = React.createRef();
-  const imgUrl = useRef(null);
   const [frame, setFrame] = useState(0);
   const [border, setBorder] = useState(null);
   const [foreground, setForeground] = useState('hsl(0, 0%, 0%)');
@@ -25,11 +24,6 @@ export default function Home() {
   const [showFile, setShowFile] = useState(true);
   const [loadedLogo, setLoadedLogo] = useState(false);
   const [activeSection, setActiveSection] = useState('text');
-
-  useEffect(() => {
-    if (file)
-      imgUrl.current = URL.createObjectURL(file);
-  }, [file]);
 
   const GetResultQr = () => {
     if (isGenerated > 0) {
@@ -63,7 +57,7 @@ export default function Home() {
 
   const handleFileChange = e => {
     if (e.target.files.length > 0) {
-      setFile(e.target.files[0]);
+      setFile(URL.createObjectURL(e.target.files[0]));
     }
   };
 
@@ -81,10 +75,10 @@ export default function Home() {
   });
 
   const QrLogo = () => {
-    if (imgUrl.current && showFile) {
+    if (file && showFile) {
       return (
         <div className={`absolute items-center top-1/2 left-1/2 w-1/5 -translate-x-1/2 -translate-y-1/2 ${loadedLogo ? "flex" : "hidden"}`}>
-          <MyImage src={imgUrl.current} />
+          <MyImage src={file} />
           <div className={styles['loader-container']} style={{display: loadedLogo ? 'none' : 'block'}}>
             <p>Please wait...</p>
           </div>
