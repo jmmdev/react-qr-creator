@@ -3,7 +3,7 @@ import styles from "./page.module.css";
 import {MdQrCode2, MdTextFields, MdOutlineSquare, MdPalette, MdImage, MdSave, MdFileUpload, MdCheck} from 'react-icons/md';
 import {IoMdEye, IoMdEyeOff} from 'react-icons/io';
 import Section from "./components/section";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FrameSelector from "./components/frame-selector";
 import "@fontsource/roboto";
 import DomToImage from "dom-to-image";
@@ -15,6 +15,7 @@ export default function Home() {
   const url = useRef('');
   const qrElementRef = React.createRef();
   const inputRef = React.createRef();
+  const imgUrl = useRef(null);
   const [frame, setFrame] = useState(0);
   const [border, setBorder] = useState(null);
   const [foreground, setForeground] = useState('hsl(0, 0%, 0%)');
@@ -25,6 +26,10 @@ export default function Home() {
   const [loadedLogo, setLoadedLogo] = useState(false);
   const [activeSection, setActiveSection] = useState('text');
 
+  useEffect(() => {
+    if (file)
+      imgUrl.current = URL.createObjectURL(file);
+  }, [file]);
 
   const GetResultQr = () => {
     if (isGenerated > 0) {
@@ -76,10 +81,10 @@ export default function Home() {
   });
 
   const QrLogo = () => {
-    if (file && showFile) {
+    if (imgUrl.current && showFile) {
       return (
-        <div className={`absolute flex items-center top-1/2 left-1/2 w-1/5 -translate-x-1/2 -translate-y-1/2 ${loadedLogo ? "" : "hidden"}`}>
-          <MyImage src={URL.createObjectURL(file)} />
+        <div className={`absolute items-center top-1/2 left-1/2 w-1/5 -translate-x-1/2 -translate-y-1/2 ${loadedLogo ? "flex" : "hidden"}`}>
+          <MyImage src={imgUrl.current} />
           <div className={styles['loader-container']} style={{display: loadedLogo ? 'none' : 'block'}}>
             <p>Please wait...</p>
           </div>
@@ -125,7 +130,6 @@ export default function Home() {
             <div className={"w-full items-center flex gap-4 h-16 md:h-auto"}>
               <button 
                 onClick={() => {
-                  setLoadedLogo(false);
                   setForeground('hsl(0, 0%, 0%)');
                 }}
                 className="w-8 aspect-square rounded-sm"
@@ -143,7 +147,6 @@ export default function Home() {
             <div className={"w-full items-center flex gap-4 h-16 md:h-auto"}>
               <button
                 onClick={() => {
-                  setLoadedLogo(false);
                   setBackground('hsl(0, 0%, 100%)');
                 }}
                 className="w-8 aspect-square rounded-sm"
